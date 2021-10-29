@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.5.30"
+    kotlin("jvm") version "1.5.31"
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
@@ -12,20 +12,11 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-
-
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
 }
 
 
-
 tasks {
-    processResources {
-        filesMatching("*.yml") {
-            expand(project.properties)
-        }
-    }
-
     shadowJar {
         from(sourceSets["main"].output)
         archiveBaseName.set(project.name)
@@ -35,7 +26,7 @@ tasks {
         doLast {
             copy {
                 from(archiveFile)
-                val plugins = File("C:/Users/blugo/바탕화면")
+                val plugins = File("C:/Users/blugo/Desktop")
                 into(plugins)
             }
         }
