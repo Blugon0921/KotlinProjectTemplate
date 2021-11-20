@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.5.31"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 group = "io.github.blugon09"
@@ -19,20 +20,22 @@ dependencies {
 
 
 tasks {
-    register<Jar>("buildJar") {
-        archiveVersion.set("")
-        archiveBaseName.set(project.name)
-        archiveFileName.set("${project.name}.jar")
+    shadowJar {
         from(sourceSets["main"].output)
+        archiveBaseName.set(project.name)
+        archiveVersion.set("")
+        archiveFileName.set("${project.name}.jar")
 
         doLast {
             copy {
                 from(archiveFile)
-
-                //Build Location
                 val plugins = File("C:/Users/blugo/Desktop")
                 into(plugins)
             }
+        }
+
+        manifest {
+            attributes["Main-Class"] = "${project.group}.${project.name.toLowerCase()}.${project.name}"
         }
     }
 }
