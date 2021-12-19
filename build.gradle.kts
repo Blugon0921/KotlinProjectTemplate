@@ -7,10 +7,14 @@ group = "io.github.blugon09"
 version = "1.0.0-SNAPSHOT"
 
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 
 repositories {
     mavenCentral()
-    maven("https://jcenter.bintray.com/")
 }
 
 dependencies {
@@ -20,10 +24,14 @@ dependencies {
 
 
 tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     shadowJar {
         from(sourceSets["main"].output)
         archiveBaseName.set(project.name)
-        archiveVersion.set("")
+        archiveVersion.set("${project.version}")
         archiveFileName.set("${project.name}.jar")
 
         doLast {
