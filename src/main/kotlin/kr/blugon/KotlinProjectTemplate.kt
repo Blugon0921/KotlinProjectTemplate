@@ -1,4 +1,4 @@
-package io.github.blugon09.kotlinprojecttemplate
+package kr.blugon
 
 class KotlinProjectTemplate {
     companion object {
