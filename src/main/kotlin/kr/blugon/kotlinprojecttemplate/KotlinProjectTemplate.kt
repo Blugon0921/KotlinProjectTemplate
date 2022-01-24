@@ -1,4 +1,4 @@
-package kr.blugon
+package kr.blugon.kotlinprojecttemplate
 
 class KotlinProjectTemplate {
     companion object {
