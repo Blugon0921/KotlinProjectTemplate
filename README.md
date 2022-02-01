@@ -1,4 +1,4 @@
-# Kotlin Project Template
+# KotlinProjectTemplate
 
 [![KotlinProjectTemplate](https://img.shields.io/badge/KotlinPluginTemplate-1.0.0_SNAPSHOT-blue.svg)]()
 <br><br>
