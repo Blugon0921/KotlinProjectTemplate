@@ -1,17 +1,16 @@
 plugins {
-    kotlin("jvm") version "1.8.0"
-    id("com.github.johnrengelman.shadow") version "7.1.1"
+    kotlin("jvm") version "1.8.21"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
-
-group = "kr.blugon"
-version = "1.0.0-SNAPSHOT"
-val buildPath = File("C:/Users/blugo/Desktop")
-
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
 }
+
+val kotlinVersion = kotlin.coreLibrariesVersion
+val buildPath = File("C:/Users/blugo/Desktop")
 
 
 repositories {
@@ -20,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("im.kimcore:Josa.kt:1.6")
     implementation("com.github.kwhat:jnativehook:2.2.2")
 }
@@ -29,42 +28,27 @@ dependencies {
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    jar {
-        from(sourceSets["main"].output)
-        archiveBaseName.set(project.name)
-        archiveVersion.set("${project.version}")
-        archiveFileName.set("${project.name}.jar")
+    jar { this.build() }
+    shadowJar { this.build() }
+}
 
-        doLast {
-            copy {
-                from(archiveFile)
-                into(buildPath)
-            }
-        }
+fun Jar.build() {
+    from(sourceSets["main"].output)
+    archiveBaseName.set(project.name) //Project Name
+    archiveFileName.set("${project.name}.jar") //Build File Name
+    archiveVersion.set(project.version.toString()) //Version
 
-        manifest {
-            attributes["Main-Class"] = "${project.group}.${project.name.toLowerCase()}.${project.name}"
+    doLast {
+        copy {
+            from(archiveFile) //Copy from
+            into(buildPath) //Copy to
         }
     }
 
-    shadowJar {
-        from(sourceSets["main"].output)
-        archiveBaseName.set(project.name)
-        archiveVersion.set("${project.version}")
-        archiveFileName.set("${project.name}.jar")
-
-        doLast {
-            copy {
-                from(archiveFile)
-                into(buildPath)
-            }
-        }
-
-        manifest {
-            attributes["Main-Class"] = "${project.group}.${project.name.toLowerCase()}.${project.name}"
-        }
+    manifest {
+        attributes["Main-Class"] = "${project.group}.${project.name.toLowerCase()}.${project.name}Kt" //Main File
     }
 }
